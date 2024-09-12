@@ -17,7 +17,7 @@ class TestApi(unittest.TestCase):
             "Authorization": f"Bearer {config['API_TOKEN']}",
         }
 
-    def create_repo(self):
+    def test1_create_repo(self):
 
         URL = "https://api.github.com/user/repos"
 
@@ -28,11 +28,11 @@ class TestApi(unittest.TestCase):
         response = requests.post(URL, headers=self.headers, json=data)
         self.assertEqual(response.status_code, 201)
 
-    def check_repo(self):
+    def test2_check_repo(self):
 
         URL = "https://api.github.com/user/repos"
 
-        response = requests.get(URL, headers=self.headers)
+        response = requests.get(URL, headers=self.headers, timeout=10)
 
         self.assertEqual(response.status_code, 200)
         repos = response.json()
@@ -44,17 +44,12 @@ class TestApi(unittest.TestCase):
 
         self.assertTrue(founded)
 
-    def delete_repo(self):
+    def test3_delete_repo(self):
 
         url = f"https://api.github.com/repos/{self.user}/{self.repo_name}"
 
         response = requests.delete(url, headers=self.headers)
         self.assertEqual(response.status_code, 204)
-
-    def test_api(self):
-        self.create_repo()
-        self.check_repo()
-        self.delete_repo()
 
 
 if __name__ == '__main__':

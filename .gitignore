@@ -139,4 +139,8 @@ cython_debug/
 
 #enviroment
 .env.dev
-.idea/*
+
+# idea
+.idea/
+
+
